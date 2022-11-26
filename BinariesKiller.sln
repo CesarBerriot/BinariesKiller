@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinariesKiller", "BinariesKiller\BinariesKiller.csproj", "{4D22FEA9-46CE-45F5-8A1C-E9393184E4A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D22FEA9-46CE-45F5-8A1C-E9393184E4A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D22FEA9-46CE-45F5-8A1C-E9393184E4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D22FEA9-46CE-45F5-8A1C-E9393184E4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D22FEA9-46CE-45F5-8A1C-E9393184E4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73AEE9E8-B22B-4616-ABF7-095CEBC212D0}
+	EndGlobalSection
+EndGlobal
