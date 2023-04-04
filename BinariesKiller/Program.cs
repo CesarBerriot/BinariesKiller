@@ -8,32 +8,70 @@ using System.Threading.Tasks;
 
 namespace BinariesKiller
 {
-    internal class Program
+    internal static class Program
     {
-        static void DeleteFolder(string _name)
+        enum Verbosity
         {
-            if (Directory.Exists(_name))
+            Info = ConsoleColor.Green,
+            Warning = ConsoleColor.Yellow,
+            Error = ConsoleColor.Red,
+        }
+
+        static void SetVerbosity(Verbosity _v) => Console.ForegroundColor = (ConsoleColor)_v;
+
+        static void Log(Verbosity _verbosity, string _verbosityMsg, string _msg, bool _inline = false)
+        {
+            SetVerbosity(_verbosity);
+            Console.Write(_verbosityMsg + _msg);
+            if (!_inline)
+                Console.WriteLine();
+        }
+
+        static void LogError(string _msg, bool _inline = false) => Log(Verbosity.Error, "[Error] ", _msg, _inline);
+        static void LogWarning(string _msg, bool _inline = false) => Log(Verbosity.Warning, "[Warning] ", _msg, _inline);
+        static void LogInfo(string _msg, bool _inline = false) => Log(Verbosity.Info, "[Info] ", _msg, _inline);
+
+        static void TryDelete(Action<string> _deleteFunc, string _type, string _name)
+        {
+            try
             {
-                Console.WriteLine($"deleted {_name}/");
-                Directory.Delete(_name, true);
+                _deleteFunc(_name);
+                LogInfo($"deleted {_type} : [{_name}]");
+            }
+            catch (Exception)
+            {
+                LogError($"Failed to delete {_type} [{_name}]\nPress enter to continue.", true);
+                Console.ReadLine();
             }
         }
+
+        static void DeleteFolder(string _name)
+        {
+            if (!Directory.Exists(_name))
+            {
+                LogWarning($"Couldn't find folder [{_name}]");
+                return;
+            }
+
+            TryDelete((string _folderName) => Directory.Delete(_folderName, true), "folder", _name);
+        }
+
         static void DeleteFilesOfExtension(string _ext)
         {
             FileInfo[] _files = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles($"*.{_ext}");
-            for (int i = 0; i < _files.Length; i++)
-            {
-                Console.WriteLine($"deleted {_files[i].Name}");
-                if (File.Exists(_files[i].Name))
-                    File.Delete(_files[i].Name);
-            }
+            foreach (FileInfo _file in _files)
+                TryDelete(File.Delete, "file", _file.Name);
         }
-        static void Main(string[] args)
+
+        static void Main()
         {
-            string[] _folders = { "Binaries", ".vs", "Intermediate", "Sript", "DerivedDataCache" };
+            string[] _folders = { "Binaries", "Saved", ".vs", ".idea", "Intermediate", "Script", "DerivedDataCache" };
             foreach (string _folder in _folders)
                 DeleteFolder(_folder);
             DeleteFilesOfExtension("sln");
+            LogInfo("Done. Press any key to continue");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
         }
     }
 }
