@@ -65,7 +65,7 @@ namespace BinariesKiller
 
         static void Main()
         {
-            string[] _folders = { "Binaries", "Saved", ".vs", ".idea", "Intermediate", "Script", "DerivedDataCache" };
+            string[] _folders = { "Binaries", "Saved", ".vs", "Intermediate", "Script", "DerivedDataCache" };
             foreach (string _folder in _folders)
                 DeleteFolder(_folder);
             DeleteFilesOfExtension("sln");
